@@ -31,10 +31,13 @@ public class LegalPersonService {
 
         LegalPerson legalPerson = modelMapper.map(legalPersonDTO, LegalPerson.class);
 
-        legalPersonRepository.findByCnpj(legalPerson.getCnpj())
-                .orElseThrow(() -> new UserAlreadyRegisteredException("Does not exist register with cnpj: " + legalPerson.getCnpj()));
+        System.out.println(legalPerson.getCnpj());
 
-        return this.legalPersonRepository.save(legalPerson);
+        if(legalPersonRepository.findByCnpj(legalPerson.getCnpj()).isEmpty()){
+            return this.legalPersonRepository.save(legalPerson);
+        }
+
+       throw new UserAlreadyRegisteredException("User already exists: " + legalPerson.getCnpj());
 
     }
 
@@ -42,11 +45,21 @@ public class LegalPersonService {
 
         LegalPerson legalPerson = modelMapper.map(legalPersonDTO, LegalPerson.class);
 
+
         LegalPerson oldLegalPerson = legalPersonRepository.findByCnpj(cnpj)
                 .orElseThrow(() -> new UserNotFoundException("Does not exist register with cnpj: " + cnpj));
 
         this.legalPersonRepository.delete(oldLegalPerson);
 
         return this.legalPersonRepository.save(legalPerson);
+    }
+
+    public void delete(String cnpj) {
+
+        LegalPerson legalPerson =  legalPersonRepository.findByCnpj(cnpj)
+                .orElseThrow(() -> new UserNotFoundException("Does not exist register with cnpj: " + cnpj));
+
+         this.legalPersonRepository.delete(legalPerson);
+
     }
 }

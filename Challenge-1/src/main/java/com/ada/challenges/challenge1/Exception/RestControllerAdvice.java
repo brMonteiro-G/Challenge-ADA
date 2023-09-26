@@ -39,7 +39,7 @@ public class RestControllerAdvice {
 
         return listOfException;
     }
-    @ResponseStatus(code = HttpStatus.BAD_REQUEST)
+    @ResponseStatus(code = HttpStatus.NOT_FOUND)
     @ExceptionHandler(UserNotFoundException.class)
     public ExceptionResponse handle(UserNotFoundException exception) {
 
@@ -51,7 +51,7 @@ public class RestControllerAdvice {
         return exceptionResponse;
     }
     @ResponseStatus(code = HttpStatus.BAD_REQUEST)
-    @ExceptionHandler(UserNotFoundException.class)
+    @ExceptionHandler(UserAlreadyRegisteredException.class)
     public ExceptionResponse handle(UserAlreadyRegisteredException exception) {
 
         ExceptionResponse exceptionResponse = new ExceptionResponse();

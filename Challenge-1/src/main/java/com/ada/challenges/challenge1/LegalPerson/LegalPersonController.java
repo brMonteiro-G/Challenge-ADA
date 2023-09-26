@@ -37,6 +37,11 @@ public class LegalPersonController {
     public LegalPerson updateEntity( @PathVariable String cnpj, @RequestBody @Valid LegalPersonDTO legalPersonDTO){
         return this.legalPersonService.update(cnpj, legalPersonDTO);
     }
+    @DeleteMapping(path = "/delete/{cnpj}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void updateEntity( @PathVariable String cnpj){
+         this.legalPersonService.delete(cnpj);
+    }
 
 
 }
