@@ -1,2 +1,4 @@
-package com.ada.challenges.challenge1.NaturalPerson;public class NaturalPersonResponseDTO {
+package com.ada.challenges.challenge1.NaturalPerson;
+
+public class NaturalPersonResponseDTO {
 }
