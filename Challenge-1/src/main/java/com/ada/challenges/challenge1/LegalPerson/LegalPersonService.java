@@ -1,7 +1,9 @@
 package com.ada.challenges.challenge1.LegalPerson;
 
+import com.ada.challenges.challenge1.Constants.Constants;
 import com.ada.challenges.challenge1.Exception.UserAlreadyRegisteredException;
 import com.ada.challenges.challenge1.Exception.UserNotFoundException;
+import com.ada.challenges.challenge1.Utils.ZeroFormatter;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
@@ -31,7 +33,9 @@ public class LegalPersonService {
 
         LegalPerson legalPerson = modelMapper.map(legalPersonDTO, LegalPerson.class);
 
-        System.out.println(legalPerson.getCnpj());
+        String formattedValue = ZeroFormatter.formatter(legalPerson.getCnpj() ,Constants.CNPJ_SIZE );
+
+        legalPerson.setCnpj(formattedValue);
 
         if(legalPersonRepository.findByCnpj(legalPerson.getCnpj()).isEmpty()){
             return this.legalPersonRepository.save(legalPerson);

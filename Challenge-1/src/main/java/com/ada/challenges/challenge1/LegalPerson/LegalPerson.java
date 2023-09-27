@@ -1,9 +1,6 @@
 package com.ada.challenges.challenge1.LegalPerson;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
 
 @Getter
@@ -17,6 +14,8 @@ public class LegalPerson {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    @Column(name = "Merchant_Category_Code")
+    private Integer mcc;
     private String cnpj;
     private String socialReason;
     private String cpfEstablishmentContact;
