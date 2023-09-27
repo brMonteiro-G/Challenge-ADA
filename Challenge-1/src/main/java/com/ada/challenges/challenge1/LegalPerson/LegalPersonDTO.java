@@ -4,6 +4,8 @@ package com.ada.challenges.challenge1.LegalPerson;
 import com.ada.challenges.challenge1.Constants.Constants;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.*;
@@ -19,21 +21,21 @@ public class LegalPersonDTO {
 
     @NotBlank(message = "cnpj is mandatory")
     @Pattern(regexp = "[0-9]+", message = "cnpj should have only numbers")
-    @CNPJ
+    @CNPJ(message = "CNPJ is invalid")
     @Size(max = Constants.CNPJ_SIZE, message = "cnpj should have only 12 digits")
-
     private String cnpj;
+
     @NotBlank(message = "social reason is mandatory")
     @Size(max = 50)
     private String socialReason;
 
-    @Size(max = 4)
-    @NotBlank(message = "mcc is mandatory")
+    @NotNull(message = "mcc is mandatory")
+    @Size(max = 4, message = "Merchant Category Code invalid")
     private Integer mcc;
 
     @NotBlank(message = "cpf establishment contact is mandatory")
     @Size(max = Constants.CPF_SIZE)
-    @CPF
+    @CPF(message = "CPF is invalid")
     private String cpfEstablishmentContact;
     @Size(max = 50)
     @NotBlank(message = "name establishment contact is mandatory")
