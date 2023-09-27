@@ -5,4 +5,9 @@
 - iniciando CRUD -> 19:52 
 - implementando a dependência do modelMapper, com o objetivo de facilitar a conversão entre DTOS e DAOS. -> 20:18
 - Pausa de 30-35 minutos para comer
-- 
+- iniciando a camada de validação dos dados que entram na api 
+- - pensei em utilizar uma anotação customizada mas no momento acredito que seja mais simples apenas uma regra de negócio que adicione zeros nos campos 
+- posteriormente retirar uso de biblioteca para não pesar no tamanho do artefato -> commons-lang
+- débito técnico, reduzir duplicidade de código das entidades Legal Person e natural Person 
+- testes devem ser feitos majoritariamente encima de regras de negócio, portanto, DTOS e classes de modelagem não precisam ser testadas, bem como métodos de libs externas.
+- testes são uma balança entre esforço e ganho, no caso o maior ganho com menor esforço ao momento é testar apenas classes com regras de negocio
