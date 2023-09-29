@@ -1,9 +1,12 @@
-package com.ada.challenges.challenge1.LegalPerson;
+package com.ada.challenges.challenge.backend.LegalPerson;
 
-import com.ada.challenges.challenge1.Exception.UserAlreadyRegisteredException;
-import com.ada.challenges.challenge1.Exception.UserNotFoundException;
+import com.ada.challenges.challenge.backend.Exception.UserAlreadyRegisteredException;
+import com.ada.challenges.challenge.backend.Exception.UserNotFoundException;
+import com.ada.challenges.challenge.backend.LegalPerson.LegalPerson;
+import com.ada.challenges.challenge.backend.LegalPerson.LegalPersonDTO;
+import com.ada.challenges.challenge.backend.LegalPerson.LegalPersonRepository;
+import com.ada.challenges.challenge.backend.LegalPerson.LegalPersonService;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -11,7 +14,6 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
 import java.util.List;

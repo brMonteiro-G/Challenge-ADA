@@ -1,4 +1,4 @@
-package com.ada.challenges.challenge1;
+package com.ada.challenges.challenge.backend;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.boot.SpringApplication;
@@ -15,6 +15,11 @@ public class Challenge1Application {
 	@Bean
 	public ModelMapper modelMapper() {
 		return new ModelMapper();
+	}
+
+	@Bean
+	public ApplicationQueue applicationQueue() {
+		return new ApplicationQueue(10);
 	}
 
 }

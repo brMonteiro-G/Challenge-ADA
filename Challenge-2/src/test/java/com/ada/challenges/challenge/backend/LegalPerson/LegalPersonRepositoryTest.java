@@ -1,5 +1,7 @@
-package com.ada.challenges.challenge1.LegalPerson;
+package com.ada.challenges.challenge.backend.LegalPerson;
 
+import com.ada.challenges.challenge.backend.LegalPerson.LegalPerson;
+import com.ada.challenges.challenge.backend.LegalPerson.LegalPersonRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

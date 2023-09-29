@@ -1,9 +1,10 @@
-package com.ada.challenges.challenge1.NaturalPerson;
+package com.ada.challenges.challenge.backend.NaturalPerson;
 
-import com.ada.challenges.challenge1.Exception.UserAlreadyRegisteredException;
-import com.ada.challenges.challenge1.Exception.UserNotFoundException;
-import com.ada.challenges.challenge1.LegalPerson.LegalPerson;
-import com.ada.challenges.challenge1.LegalPerson.LegalPersonDTO;
+import com.ada.challenges.challenge.backend.Exception.UserAlreadyRegisteredException;
+import com.ada.challenges.challenge.backend.Exception.UserNotFoundException;
+import com.ada.challenges.challenge.backend.NaturalPerson.NaturalPerson;
+import com.ada.challenges.challenge.backend.NaturalPerson.NaturalPersonDTO;
+import com.ada.challenges.challenge.backend.NaturalPerson.NaturalPersonRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

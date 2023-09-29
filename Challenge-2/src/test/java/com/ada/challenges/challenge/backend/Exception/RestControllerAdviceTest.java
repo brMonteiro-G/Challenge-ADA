@@ -1,4 +1,4 @@
-package com.ada.challenges.challenge1.Exception;
+package com.ada.challenges.challenge.backend.Exception;
 
 import org.junit.jupiter.api.Test;
 

@@ -1,4 +1,4 @@
-package com.ada.challenges.challenge1;
+package com.ada.challenges.challenge.backend;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

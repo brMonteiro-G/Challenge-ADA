@@ -1,5 +1,7 @@
-package com.ada.challenges.challenge1.NaturalPerson;
+package com.ada.challenges.challenge.backend.NaturalPerson;
 
+import com.ada.challenges.challenge.backend.NaturalPerson.NaturalPerson;
+import com.ada.challenges.challenge.backend.NaturalPerson.NaturalPersonRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

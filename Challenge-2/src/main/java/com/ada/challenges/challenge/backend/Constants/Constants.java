@@ -1,4 +1,4 @@
-package com.ada.challenges.challenge1.Constants;
+package com.ada.challenges.challenge.backend.Constants;
 
 public  class Constants {
 

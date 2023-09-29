@@ -1,6 +1,5 @@
-package com.ada.challenges.challenge1.Utils;
+package com.ada.challenges.challenge.backend.Utils;
 
-import com.ada.challenges.challenge1.Constants.Constants;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
