@@ -13,6 +13,7 @@ import org.hibernate.validator.constraints.br.CPF;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 @ToString
 public class NaturalPersonDTO {
 
