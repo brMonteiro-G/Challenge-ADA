@@ -3,11 +3,14 @@ package com.ada.challenges.challenge.backend.Queue;
 
 import com.ada.challenges.challenge.backend.Exception.QueueEmptyException;
 import com.ada.challenges.challenge.backend.Exception.QueueFullException;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @ToString
+@Getter
 public class ApplicationQueue {
 
     private Object[] queueArray;
@@ -23,14 +26,13 @@ public class ApplicationQueue {
 
         this.queueArray = new Object[size];
 
-
         fillArray(queueArray, "0");
-
 
     }
 
 
     public void insert(Object input) {
+
         if (numberOfItems + 1 <= queueSize) {
             queueArray[rear] = input;
             rear++;
@@ -69,7 +71,8 @@ public class ApplicationQueue {
         for (int i = 0, len = a.length; i < len; i++) {
             a[i] = val;
         }
-
     }
+
+
 
 }
