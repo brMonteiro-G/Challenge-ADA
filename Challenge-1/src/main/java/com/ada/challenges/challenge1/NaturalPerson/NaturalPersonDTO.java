@@ -11,6 +11,7 @@ import org.hibernate.validator.constraints.br.CPF;
 
 @Getter
 @Setter
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString

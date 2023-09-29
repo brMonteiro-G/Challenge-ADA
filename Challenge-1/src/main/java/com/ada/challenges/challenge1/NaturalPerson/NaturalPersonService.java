@@ -31,17 +31,17 @@ public class NaturalPersonService {
 
     public NaturalPerson create(NaturalPersonDTO naturalPersonDTO) {
 
-        NaturalPerson legalPerson = modelMapper.map(naturalPersonDTO, NaturalPerson.class);
+        NaturalPerson naturalPerson = modelMapper.map(naturalPersonDTO, NaturalPerson.class);
 
-        String formattedValue = ZeroFormatter.formatter(legalPerson.getCpf() ,Constants.CNPJ_SIZE );
+        String formattedValue = ZeroFormatter.formatter(naturalPerson.getCpf() ,Constants.CPF_SIZE );
 
-        legalPerson.setCpf(formattedValue);
+        naturalPerson.setCpf(formattedValue);
 
-        if(naturalPersonRepository.findByCpf(legalPerson.getCpf()).isEmpty()){
-            return this.naturalPersonRepository.save(legalPerson);
+        if(naturalPersonRepository.findByCpf(naturalPerson.getCpf()).isEmpty()){
+            return this.naturalPersonRepository.save(naturalPerson);
         }
 
-        throw new UserAlreadyRegisteredException("User already exists: " + legalPerson.getCpf());
+        throw new UserAlreadyRegisteredException("User already exists: " + naturalPerson.getCpf());
 
     }
 
