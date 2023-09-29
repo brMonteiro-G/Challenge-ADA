@@ -1,16 +1,46 @@
 # Iniciando projeto
 
-- Primeira decisão é a modelagem, optei por iniciar criando um CRUD para cada uma das entidades em questão e coloquei o lombok no projeto para reduzir a quantidade de código boilerplate
-- A opção pelo uso do Banco de dados em memória h2 vem no sentido de ser o banco de dados mais habitual e o visto em aula, dessa forma, dado o prazo apertado como MVP, seria interessante partir pelo caminho mais fácil no primeiro momento, ficando como débito técnico ao final do processo, já que o h2 não seria suficiente para ambientes produtivos 
-- iniciando CRUD -> 19:52 
-- implementando a dependência do modelMapper, com o objetivo de facilitar a conversão entre DTOS e DAOS. -> 20:18
-- Pausa de 30-35 minutos para comer
-- iniciando a camada de validação dos dados que entram na api 
-- - pensei em utilizar uma anotação customizada mas no momento acredito que seja mais simples apenas uma regra de negócio que adicione zeros nos campos 
-- posteriormente retirar uso de biblioteca para não pesar no tamanho do artefato -> commons-lang
-- débito técnico, reduzir duplicidade de código das entidades Legal Person e natural Person 
-- testes devem ser feitos majoritariamente encima de regras de negócio, portanto, DTOS e classes de modelagem não precisam ser testadas, bem como métodos de libs externas.
-- testes são uma balança entre esforço e ganho, no caso o maior ganho com menor esforço ao momento é testar apenas classes com regras de negocio
-- adicionar beforeEach nos testes para evitar duplicação de codigo 
-- adicionar classe devolutiva ao método delete nos services e controllers  
-- adicionar teste de tamanho de cpf e tamanho de cnpj 
+# Hello World: 
+
+Olá,separei a evolução do código em alguns pacotes diferentes, cada um com uma versão do código a medida que foram se desenvolvendo as etapas do projeto. 
+Esse primeiro pacote contém a primeira versão da api. 
+
+Challenge 1: CRUD de Pessoa Física e Pessoa Jurídica
+
+Débitos técnicos para serem revisitados em outros momentos: 
+
+## Troca do banco de dados.
+- Os benefícios do h2 são muito pequenos em relação ao uso de outros bancos de dados e outras arquiteturas, por ser um banco em memória não será possível escalar a aplicação. 
+    ### Possíveis soluções 
+    - banco de dados dockerizado rodando em uma instância EC2 na Amazon, com escabailidade vertical. Ao optar por escala horizontal poderíamos ter perda de integridade. 
+    - banco de dados gerenciado como RDS da AWS 
+
+## Adicionar abstração para devolução dos dados de request.
+- Será necessário adicionar futuramente uma camada de DTO para esconder a modelagem feita no banco (verificar pacote challenge-4)
+
+## Testes unitários 
+
+- Adicionar testes unitários para validar cenários onde o usuário mande um tamnho de cpf e cnpj maior do que o esperado. (verificar pacote challenge-4)
+- Nem todas as classes serão testadas, já que classes de modelagem não necessitam de testes, sendo mais interessante focar os esforços em classes de regra de negócio. 
+
+## Tratamento de exceptions
+
+- Aqui o tratamento de exceções deve ser mais granular, investigando os mínimos detalhes de casos de erro, nessa versão foram cobertos erros de validação lançados pelo spring-validation 
+- porém ainda existe oportunidade para outros tratamentos de erro. 
+
+
+# Stack
+- java 17 
+- spring 3.0.11
+
+# Como rodar? 
+Basta baixar o projeto e rodar localmente. 
+```bash
+git pull origin master
+cd ADA-CHALLENGE/Challenge-1
+```
+
+# Swagger
+```bash
+localhost:8082/swagger-ui-custom.html
+```
