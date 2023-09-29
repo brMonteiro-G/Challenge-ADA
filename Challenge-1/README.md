@@ -11,3 +11,6 @@
 - débito técnico, reduzir duplicidade de código das entidades Legal Person e natural Person 
 - testes devem ser feitos majoritariamente encima de regras de negócio, portanto, DTOS e classes de modelagem não precisam ser testadas, bem como métodos de libs externas.
 - testes são uma balança entre esforço e ganho, no caso o maior ganho com menor esforço ao momento é testar apenas classes com regras de negocio
+- adicionar beforeEach nos testes para evitar duplicação de codigo 
+- adicionar classe devolutiva ao método delete nos services e controllers  
+- adicionar teste de tamanho de cpf e tamanho de cnpj 
