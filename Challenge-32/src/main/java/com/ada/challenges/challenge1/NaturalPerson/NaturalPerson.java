@@ -8,7 +8,6 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-@Builder
 @Entity
 public class NaturalPerson {
 
@@ -20,7 +19,6 @@ public class NaturalPerson {
     private String cpf;
     private String personName;
     private String personEmail;
-
 
 
 }

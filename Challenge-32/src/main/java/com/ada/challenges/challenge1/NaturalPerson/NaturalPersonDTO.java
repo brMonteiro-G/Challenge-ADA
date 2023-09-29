@@ -11,7 +11,6 @@ import org.hibernate.validator.constraints.br.CPF;
 
 @Getter
 @Setter
-@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
@@ -30,11 +29,9 @@ public class NaturalPersonDTO {
     @NotBlank(message = "person name is mandatory")
     private String personName;
 
-    @Email(regexp = "^([a-zA-Z0-9_\\\\-\\\\.]+)@([a-zA-Z0-9_\\\\-\\.]+)\\\\.([a-zA-Z]{2,5})$")
+    @Email(regexp = "^([a-zA-Z0-9_\\-\\.]+)@([a-zA-Z0-9_\\-\\.]+)\\.([a-zA-Z]{2,5})$")
     @NotBlank(message = "email person is mandatory")
     private String personEmail;
-
-
 
 
 }

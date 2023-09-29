@@ -3,6 +3,7 @@ package com.ada.challenges.challenge1.NaturalPerson;
 import com.ada.challenges.challenge1.Constants.Constants;
 import com.ada.challenges.challenge1.Exception.UserAlreadyRegisteredException;
 import com.ada.challenges.challenge1.Exception.UserNotFoundException;
+import com.ada.challenges.challenge1.Queue.ApplicationQueue;
 import com.ada.challenges.challenge1.Utils.ZeroFormatter;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -14,12 +15,13 @@ public class NaturalPersonService {
 
     private final NaturalPersonRepository naturalPersonRepository;
     private final ModelMapper modelMapper;
+    private final ApplicationQueue applicationQueue;
 
 
-    public NaturalPersonService(NaturalPersonRepository naturalPersonRepository, ModelMapper modelMapper) {
+    public NaturalPersonService(NaturalPersonRepository naturalPersonRepository, ModelMapper modelMapper, ApplicationQueue applicationQueue) {
         this.naturalPersonRepository = naturalPersonRepository;
         this.modelMapper = modelMapper;
-
+        this.applicationQueue = applicationQueue;
     }
 
 
@@ -31,21 +33,22 @@ public class NaturalPersonService {
 
     public NaturalPerson create(NaturalPersonDTO naturalPersonDTO) {
 
-        NaturalPerson naturalPerson = modelMapper.map(naturalPersonDTO, NaturalPerson.class);
+        NaturalPerson legalPerson = modelMapper.map(naturalPersonDTO, NaturalPerson.class);
 
-        String formattedValue = ZeroFormatter.formatter(naturalPerson.getCpf() ,Constants.CPF_SIZE );
+        String formattedValue = ZeroFormatter.formatter(legalPerson.getCpf(), Constants.CNPJ_SIZE);
 
-        naturalPerson.setCpf(formattedValue);
+        legalPerson.setCpf(formattedValue);
 
-        if(naturalPersonRepository.findByCpf(naturalPerson.getCpf()).isEmpty()){
-            return this.naturalPersonRepository.save(naturalPerson);
+        if (naturalPersonRepository.findByCpf(legalPerson.getCpf()).isEmpty()) {
+            applicationQueue.insert(legalPerson);
+            return this.naturalPersonRepository.save(legalPerson);
         }
 
-        throw new UserAlreadyRegisteredException("User already exists: " + naturalPerson.getCpf());
+        throw new UserAlreadyRegisteredException("User already exists: " + legalPerson.getCpf());
 
     }
 
-    public NaturalPerson update(String cpf,NaturalPersonDTO naturalPersonDTO) {
+    public NaturalPerson update(String cpf, NaturalPersonDTO naturalPersonDTO) {
 
         NaturalPerson naturalPerson = modelMapper.map(naturalPersonDTO, NaturalPerson.class);
 
@@ -60,7 +63,7 @@ public class NaturalPersonService {
 
     public void delete(String cpf) {
 
-        NaturalPerson naturalPerson =  naturalPersonRepository.findByCpf(cpf)
+        NaturalPerson naturalPerson = naturalPersonRepository.findByCpf(cpf)
                 .orElseThrow(() -> new UserNotFoundException("Does not exist register with cpf: " + cpf));
 
         this.naturalPersonRepository.delete(naturalPerson);

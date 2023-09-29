@@ -2,12 +2,8 @@ package com.ada.challenges.challenge1.LegalPerson;
 
 
 import com.ada.challenges.challenge1.Constants.Constants;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.*;
 
-import jakarta.validation.constraints.Pattern;
-import jakarta.validation.constraints.Size;
 import lombok.*;
 import org.hibernate.validator.constraints.br.CNPJ;
 import org.hibernate.validator.constraints.br.CPF;
@@ -16,7 +12,6 @@ import org.hibernate.validator.constraints.br.CPF;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
 @ToString
 public class LegalPersonDTO {
 
@@ -31,7 +26,7 @@ public class LegalPersonDTO {
     private String socialReason;
 
     @NotNull(message = "mcc is mandatory")
-    @Size(max = 4, message = "Merchant Category Code invalid")
+    @Max(value = 9999, message = "invalid mcc code, until 4 numbers are allowed")
     private Integer mcc;
 
     @NotBlank(message = "cpf establishment contact is mandatory")
