@@ -45,9 +45,9 @@ public class LegalPersonService {
         legalPerson.setCnpj(formattedValue);
 
         if (legalPersonRepository.findByCnpj(legalPerson.getCnpj()).isEmpty()) {
+            LegalPerson savedLegalPerson = this.legalPersonRepository.save(legalPerson);
             notificationService.sendNotification(legalPerson);
-
-            return this.legalPersonRepository.save(legalPerson);
+            return savedLegalPerson;
         }
 
         throw new UserAlreadyRegisteredException("User already exists: " + legalPerson.getCnpj());
@@ -63,10 +63,12 @@ public class LegalPersonService {
                 .orElseThrow(() -> new UserNotFoundException("Does not exist register with cnpj: " + cnpj));
 
         this.legalPersonRepository.delete(oldLegalPerson);
+        LegalPerson savedLegalPerson = this.legalPersonRepository.save(legalPerson);
+
         notificationService.sendNotification(legalPerson);
 
 
-        return this.legalPersonRepository.save(legalPerson);
+        return savedLegalPerson;
     }
 
     public void delete(String cnpj) {

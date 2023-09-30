@@ -19,7 +19,7 @@ public class SqsConfiguration {
 
     @Value("${aws.queue-name}")
     private String queueName;
-    private String payloadMessage;
+    private Object payloadMessage;
     private String queueStatus;
 
 
@@ -32,7 +32,7 @@ public class SqsConfiguration {
    public SqsMessageListenerContainer<LegalPerson> receiveMessage(SqsAsyncClient sqsAsyncClient){
         return new SqsMessageListenerContainer.Builder<LegalPerson>()
                 .sqsAsyncClient(sqsAsyncClient).queueNames(this.queueName)
-                .messageListener((message -> this.payloadMessage = String.valueOf(message.getPayload()))).build();
+                .messageListener((message -> this.payloadMessage = message.getPayload())).build();
     }
 
     @Bean

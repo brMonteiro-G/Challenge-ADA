@@ -24,7 +24,7 @@ public class NotificationService {
     }
 
     public void sendNotification(NaturalPerson naturalPerson){
-        snsTemplate.sendNotification(topicArn, naturalPerson, "New message: Legal Person added");
+        snsTemplate.sendNotification(topicArn, naturalPerson, "New message: NaturalPerson Person added");
 
     }
 

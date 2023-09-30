@@ -3,6 +3,7 @@ package com.ada.challenges.challenge.backend.NaturalPerson;
 import com.ada.challenges.challenge.backend.Constants.Constants;
 import com.ada.challenges.challenge.backend.Exception.UserAlreadyRegisteredException;
 import com.ada.challenges.challenge.backend.Exception.UserNotFoundException;
+import com.ada.challenges.challenge.backend.LegalPerson.LegalPerson;
 import com.ada.challenges.challenge.backend.Queue.ApplicationQueue;
 import com.ada.challenges.challenge.backend.Utils.ZeroFormatter;
 import com.ada.challenges.challenge.backend.aws.NotificationService;
@@ -38,19 +39,19 @@ public class NaturalPersonService {
 
     public NaturalPerson create(NaturalPersonDTO naturalPersonDTO) {
 
-        NaturalPerson legalPerson = modelMapper.map(naturalPersonDTO, NaturalPerson.class);
+        NaturalPerson naturalPerson = modelMapper.map(naturalPersonDTO, NaturalPerson.class);
 
-        String formattedValue = ZeroFormatter.formatter(legalPerson.getCpf(), Constants.CNPJ_SIZE);
+        String formattedValue = ZeroFormatter.formatter(naturalPerson.getCpf(), Constants.CNPJ_SIZE);
 
-        legalPerson.setCpf(formattedValue);
+        naturalPerson.setCpf(formattedValue);
 
-        if (naturalPersonRepository.findByCpf(legalPerson.getCpf()).isEmpty()) {
-
-            notificationService.sendNotification(legalPerson);
-            return this.naturalPersonRepository.save(legalPerson);
+        if (naturalPersonRepository.findByCpf(naturalPerson.getCpf()).isEmpty()) {
+            NaturalPerson savedLegalPerson = this.naturalPersonRepository.save(naturalPerson);
+            notificationService.sendNotification(naturalPerson);
+            return savedLegalPerson;
         }
 
-        throw new UserAlreadyRegisteredException("User already exists: " + legalPerson.getCpf());
+        throw new UserAlreadyRegisteredException("User already exists: " + naturalPerson.getCpf());
 
     }
 
@@ -64,6 +65,7 @@ public class NaturalPersonService {
 
         this.naturalPersonRepository.delete(oldNaturalPerson);
         NaturalPerson savedNaturalPerson = this.naturalPersonRepository.save(naturalPerson);
+
         notificationService.sendNotification(naturalPerson);
         return savedNaturalPerson;
     }

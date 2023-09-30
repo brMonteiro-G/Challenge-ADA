@@ -3,33 +3,24 @@
 # Hello World:
 
 Olá,separei a evolução do código em alguns pacotes diferentes, cada um com uma versão do código a medida que foram se desenvolvendo as etapas do projeto.
-Esse primeiro pacote contém a segunda versão da api.
+Esse primeiro pacote contém a última versão da api.
 
-Challenge 3: Integração com SQS e SNS
+Challenge 4: segurança da aplicação
 
-Débitos técnicos para serem revisitados em outros momentos:
+## Problemas de segurança a serem analisados: 
 
-## Implementação de padrão DLQ 
+ - Vulnerabilidades de dependências usadas no projeto 
+ - Secret keys abertas no arquivo application.properties
+ - A aplicação precisa de um token jwt para fazer autenticação.
+ - Rotas que efetuam transações no banco e não possuem regras de roles para fazer autorização de usuários.
+ - Nenhuma proteção contra ataques DDOS 
+ - Nenhuma proteção contra CSRF 
+ - Nenhuma proteção contra XSS e clickjacking
 
-- O padrão Dead Letter Queue recomenda a criação de um novo fila com um período de retenção que minimize a perda de mensagens
-em caso de erro no momento do consumo da mensagem na fila. 
+### Maiores criticidades: 
 
-## Código Dinâmico
-- Com essa versão do código precisamos setar manualmente no arquivo application.properties alguns valores para que a 
-  aplicação consiga se conectar com os serviços da AWS, futuramente será interessante adicionar uma camada de utilização do aws sdk 
-  que permite buscar as urls, arns e outros de maneira automática baseado em minhas credenciais e regiões criadas com base no cloudformation.
-
-## Tratamento de exceptions 
-
-- adicionar tratamento de exceção customizado aos trechos de código com integração a serviços externos como a aws. 
-
-## Script com AWS CLI 
-
-- Seria interessante aqui também um script com a ferramente de cli da aws, com ela poderia ser feito a criação da stack por meio da linha de comando 
-além de poder passar parâmetros de configuração aos recursos usados.
-
-## Stack no S3
-- Como boa prática é interessante manter o arquivo de IaC em um bucket do S3 ao invés de deixa-lo no projeto, assim nos referenciariamos ao endereço dele para criar os recursos.
+1. Falta de um token JWT 
+2. Vulnerabilidade a ataques DDOS (AWS shield é uma solução) e CSRF 
 
 # Stack
 - java 17
