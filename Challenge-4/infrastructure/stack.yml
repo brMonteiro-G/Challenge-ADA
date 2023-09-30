@@ -1,0 +1,188 @@
+{
+  "AWSTemplateFormatVersion" : "2010-09-09",
+
+  "Description" : "Infrastructure as code is a good pratice to scalable system designs",
+
+  "Parameters": {
+    "MyApplicationUserPassword": {
+      "NoEcho": "true",
+      "Type": "String",
+      "Description": "Password for the IAM user MyPublishUser",
+      "MinLength": "1",
+      "MaxLength": "41",
+      "AllowedPattern": "[a-zA-Z0-9]*",
+      "ConstraintDescription": "must contain only alphanumeric characters.",
+      "Default": "Teste123"
+    }
+  },
+
+
+  "Resources": {
+    "MySNSTopic": {
+      "Type": "AWS::SNS::Topic",
+      "Properties": {
+        "Subscription": [{
+          "Endpoint": {
+            "Fn::GetAtt": ["MyNotificationQueue", "Arn"]
+          },
+          "Protocol": "sqs"
+        }
+        ]
+      }
+    },
+    "MyNotificationQueue": {
+      "Type": "AWS::SQS::Queue"
+    },
+
+    "MyApplicationUser": {
+      "Type": "AWS::IAM::User",
+      "Properties": {
+        "LoginProfile": {
+          "Password": {
+            "Ref": "MyApplicationUserPassword"
+          }
+        }
+      }
+    },
+    "MyApplicationUserKey": {
+      "Type": "AWS::IAM::AccessKey",
+      "Properties": {
+        "UserName": {
+          "Ref": "MyApplicationUser"
+        }
+      }
+    },
+    "MyPublishTopicGroup": {
+      "Type": "AWS::IAM::Group",
+      "Properties": {
+        "Policies": [{
+          "PolicyName": "MyTopicGroupPolicy",
+          "PolicyDocument": {
+            "Statement": [{
+              "Effect": "Allow",
+              "Action": [
+                "sns:Publish"
+              ],
+              "Resource": {
+                "Ref": "MySNSTopic"
+              }
+            }]
+          }
+        }]
+      }
+    },
+    "AddUserToMyPublishTopicGroup": {
+      "Type": "AWS::IAM::UserToGroupAddition",
+      "Properties": {
+        "GroupName": {
+          "Ref": "MyPublishTopicGroup"
+        },
+        "Users": [{
+          "Ref": "MyApplicationUser"
+        }]
+      }
+    },
+    "MyRDMessageQueueGroup": {
+      "Type": "AWS::IAM::Group",
+      "Properties": {
+        "Policies": [{
+          "PolicyName": "MyQueueGroupPolicy",
+          "PolicyDocument": {
+            "Statement": [{
+              "Effect": "Allow",
+              "Action": [
+                "sqs:*"
+              ],
+              "Resource": [{
+                "Fn::GetAtt": ["MyNotificationQueue", "Arn"]
+              }
+              ]
+            }]
+          }
+        }]
+      }
+    },
+    "AddUserToMyQueueGroup": {
+      "Type": "AWS::IAM::UserToGroupAddition",
+      "Properties": {
+        "GroupName": {
+          "Ref": "MyRDMessageQueueGroup"
+        },
+        "Users": [{
+          "Ref": "MyApplicationUser"
+        }]
+      }
+    },
+    "MyQueuePolicy": {
+      "Type": "AWS::SQS::QueuePolicy",
+      "Properties": {
+        "PolicyDocument": {
+          "Statement": [{
+            "Effect": "Allow",
+            "Principal": {
+              "Service": "sns.amazonaws.com"
+            },
+            "Action": ["sqs:SendMessage"],
+            "Resource": "*",
+            "Condition": {
+              "ArnEquals": {
+                "aws:SourceArn": {
+                  "Ref": "MySNSTopic"
+                }
+              }
+            }
+          }]
+        },
+        "Queues": [{
+          "Ref": "MyNotificationQueue"
+        }]
+      }
+    }
+  },
+
+  "Outputs": {
+    "MySNSTopicTopicARN": {
+      "Value": {
+        "Ref": "MySNSTopic"
+      }
+    },
+    "MyQueue1Info": {
+      "Value": {
+        "Fn::Join": [
+          " ",
+          [
+            "ARN:",
+            {
+              "Fn::GetAtt": ["MyNotificationQueue", "Arn"]
+            },
+            "URL:",
+            {
+              "Ref": "MyNotificationQueue"
+            }
+          ]
+        ]
+      }
+    },
+    "MyApplicationUserInfo": {
+      "Value": {
+        "Fn::Join": [
+          " ",
+          [
+            "ARN:",
+            {
+              "Fn::GetAtt": ["MyApplicationUser", "Arn"]
+            },
+            "Access Key:",
+            {
+              "Ref": "MyApplicationUserKey"
+            },
+            "Secret Key:",
+            {
+              "Fn::GetAtt": ["MyApplicationUserKey", "SecretAccessKey"]
+            }
+          ]
+        ]
+      }
+    }
+  }
+}
